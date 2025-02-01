@@ -1,0 +1,9 @@
+create vite react front end
+    npm create vite@latest frontend -- --template react
+
+install axios to request and response
+    npm i axios
+
+to run
+    npm i run dev
+
