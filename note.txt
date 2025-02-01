@@ -1,9 +1,36 @@
-create vite react front end
+to create react vite
     npm create vite@latest frontend -- --template react
 
 install axios to request and response
     npm i axios
 
 to run
-    npm i run dev
+    nom run dev
 
+install react router dom 
+    npm i react-router-dom
+
+
+
+npm install redux react-redux
+
+
+rfce -> create a component
+
+
+npm install @reduxjs/toolkit 
+-> instead of using create store, now people using configureStore
+
+
+ <Provider> store={store} 
+ -> store is props
+
+
+ <ItemContainer cake/> 
+ -> send props to the component
+
+
+use Redux to store login status 
+-- redux store is lost when refresh the page
+-- should use redux persist to store in local storage (persisted state)
+---> npm install redux-persist
