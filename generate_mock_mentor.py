@@ -80,7 +80,7 @@ def main():
         "LinkedIn Profile",
     ]
 
-    # Write to CSV
+    # Write to CSV and generate
     output_filename = "mock_profiles.csv"
     with open(output_filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
