@@ -17,17 +17,20 @@ skills_pool = [
     "Python", "Java", "C++", "SQL", "AWS", "TensorFlow", "PyTorch", "React",
     "Node.js", "Docker", "Kubernetes", "Machine Learning", "Deep Learning",
     "Data Analysis", "Agile", "Team Leadership", "Communication",
-    "Problem Solving", "Project Management", "Cloud Computing"
+    "Problem Solving", "Project Management", "Cloud Computing", "Software Architecture",
+    "C#", "C", "HTML", "CSS"
 ]
 educations = [
-    "B.Sc. in Computer Science", "M.Sc. in Data Science",
+    "B.S. in Computer Science", "M.S. in Data Science",
     "B.A. in Information Technology", "Ph.D. in Artificial Intelligence",
-    "B.Sc. in Electrical Engineering"
+    "B.S. in Electrical Engineering", "B.A. in Computer Science", "M.S. in Computer Science",
+    "M.S. in Computer Engineering", "B.S. in Computer Engineering"
 ]
 locations = [
     "New York, NY", "San Francisco, CA", "Seattle, WA", "Austin, TX",
     "London, UK", "Berlin, Germany", "Toronto, Canada", "Sydney, Australia",
-    "Singapore", "Paris, France"
+    "Singapore", "Paris, France", "Los Angeles, CA", "San Diego, CA", "Seoul, South Korea",
+    "Atlanta, GA", "Chicago IL", 
 ]
 
 def generate_mentor_profile():
