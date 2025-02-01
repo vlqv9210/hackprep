@@ -1,6 +1,17 @@
 backend - setup - TORUN: python3 main.py
-    cd backend
-    pip3 install Flask
-    pip3 install Flask-SQLAlchemy
-    pip3 install flask-cors
-    pip install sqlalchemy
+cd backend
+pip3 install Flask
+pip3 install Flask-SQLAlchemy
+pip3 install flask-cors
+pip install sqlalchemy
+
+git Add, Commit, and Push Your Changes
+
+If you have untracked files, add them:
+git add .
+
+Commit the changes:
+git commit -m "Initial commit"
+
+Push to GitHub:
+git push -u origin main
