@@ -5,8 +5,10 @@ pip3 install Flask-SQLAlchemy
 pip3 install flask-cors
 pip install sqlalchemy
 
-git Add, Commit, and Push Your Changes
+need to pull first if there is any changes in repository
+git pull
 
+git Add, Commit, and Push Your Changes
 If you have untracked files, add them:
 git add .
 
