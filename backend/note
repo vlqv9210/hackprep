@@ -6,7 +6,7 @@ pip3 install flask-cors
 pip install sqlalchemy
 
 need to pull first if there is any changes in repository
-git pull
+git pull origin main --rebase
 
 git Add, Commit, and Push Your Changes
 If you have untracked files, add them:
