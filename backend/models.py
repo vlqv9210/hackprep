@@ -1,58 +1,58 @@
-# from flask import request
-# from sqlalchemy.orm import sessionmaker
-# from config import db
+from flask import request
+from sqlalchemy.orm import sessionmaker
+from config import db
 
-# # deepseek api key
-# # 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
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    jobTitle = db.Column(db.String(80), nullable=False)
+    city = db.Column(db.String(80), nullable=False)
+    education = db.Column(db.String(80), nullable=False)
+    years_of_experience = db.Column(db.Integer, nullable=True)
+    linkedin_profile = db.Column(db.String(200), nullable=True)
+    skills = db.relationship('UserSkill', backref='user', lazy=True)
 
-# class User(db.Model):
-#     __tablename__ = 'user'
-#     username = db.Column(db.String(80), primary_key=True, nullable=False, unique=True)
-#     jobTitle = db.Column(db.String(80), nullable=False, unique=True)
-#     city = db.Column(db.String(80), nullable=False, unique=True)
-#     education = db.Column(db.String(80), nullable=False, unique=True)
-#     skills = db.relationship('UserSkill', backref='user', lazy=True)
+    def __init__(self, id, name, jobTitle, city, education, years_of_experience, linkedin_profile):
+        self.id = id
+        self.name = name
+        self.jobTitle = jobTitle
+        self.city = city
+        self.education = education
+        self.years_of_experience = years_of_experience
+        self.linkedin_profile = linkedin_profile
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "jobTitle": self.jobTitle,
+            "city": self.city,
+            "education": self.education,
+            "years_of_experience": self.years_of_experience,
+            "linkedin_profile": self.linkedin_profile,
+        }
 
-#     def __init__(self, username, jobTitle, city, education, skills):
-#         self.username = username
-#         self.jobTitle = jobTitle
-#         self.city = city
-#         self.education = education
-#         self.skills = skills
+class Skill(db.Model):
+    __tablename__ = 'skill'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False, unique=True)
 
-#     def to_json(self):
-#         return {
-            
+    def __init__(self, name):
+        self.name = name
 
-#         }
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
 
+class UserSkill(db.Model):
+    __tablename__ = 'user_skill'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.username'), nullable=False)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
 
-# class UserSkill(db.Model):
-#     __tablename__ = 'skill'
-#     id = db.Column(db.Integer, primary_key=True)
-#     # ondelete='CASCADE' means that if a Pokemon/Skill is deleted, 
-#     # this instance will also be deleted.
-#     # user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
-
-
-# class Skill(db.Model):
-#     __tablename__ = 'skill'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(80), nullable=False)
-
-#     def __init__(self, id, name):
-#         self.id = id
-#         self.name = name
-
-#     def to_json(self):
-#         return {
-#             "id": self.id,
-#             "name": self.name,
-#         }
-
-    
-
-
+    def __init__(self, user_id, skill_id):
+        self.user_id = user_id
+        self.skill_id = skill_id

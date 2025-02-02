@@ -7,7 +7,6 @@ import requests
 from dotenv import load_dotenv
 import os
 import csv
-import utils
 
 
 # Load environment variables from the .env file
@@ -20,7 +19,7 @@ def home():
 # @app.route('/', methods=["POST"])
 # def UserData():
 
-#     api_key = '5OowENhf0gUjDqxmLGf9YA'
+#     api_key = ''
 #     headers = {'Authorization': 'Bearer ' + api_key}
 #     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
 #     linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
@@ -37,24 +36,43 @@ def home():
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get user url from frontend
-    linkedin_profile_url = request.json.get("linkedin_profile_url")
+    
+
 
 
     # call proxycurl api to get user data into categories
-    api_key = os.getenv('API_KEY')
-    headers = {'Authorization': 'Bearer ' + api_key}
-    api_endpoint = os.getenv('API_ENDPOINT')
-    params = {
-        'url': linkedin_profile_url
-    }
-
-    response = requests.get(api_endpoint, params=params, headers=headers)
     
+    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
+    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
+    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+
+    response = requests.get(api_endpoint,
+                        params={'url': linkedin_profile_url, 
+                                },
+                        headers=headers)
     result = response.json()
 
 
 
-    # mentor data that match with user skills
+    # mentor data that match with user skills?
+def csv_to_json(csv):
+    json_data = []
+    
+    with open(csv_file, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            json_item = {
+                "Name": row["Name"],
+                "Job Title": row["Job Title"],
+                "Location": row["Location"],
+                "Education": row["Education"],
+                "Years of Experience": int(row["Years of Experience"]),
+                "Skills": row["Skills"].split(", "),
+                "LinkedIn Profile": row["LinkedIn Profile"]
+            }
+            json_data.append(json_item)
+    
+    return json_data
 
     # call AI API for analysis
     csv_file = 'mock_profiles.csv'
