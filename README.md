@@ -25,11 +25,11 @@ What it does LinkUp is a mentorship matching platform that helps users find and 
 - **Search & Filtering**: Find the right match quickly with advanced search options.
 
 ## What's next for LinkUp Enhanced AI Matching: 
-Improve mentor recommendations by incorporating skills, industries, and career goals. 
-Profile Customization: Allow users to refine search criteria for more personalized mentor suggestions. 
-Automated Outreach: Enable users to send AI-crafted messages directly through the platform. 
-Mobile-Friendly Version: Optimize the UI for better mobile accessibility. 
-Integration with More Platforms: Expand beyond LinkedIn to include other professional networks.
+- Improve mentor recommendations by incorporating skills, industries, and career goals. 
+- Profile Customization: Allow users to refine search criteria for more personalized mentor suggestions. 
+- Automated Outreach: Enable users to send AI-crafted messages directly through the platform. 
+- Mobile-Friendly Version: Optimize the UI for better mobile accessibility. 
+- Integration with More Platforms: Expand beyond LinkedIn to include other professional networks.
 
 
 
@@ -83,6 +83,7 @@ linkup/
 ├── package.json     # Project dependencies and scripts
 ├── requirements.txt # Python dependencies
 └── README.md        # Project documentation
+
 
 ## License
 This project is licensed under the MIT License.
