@@ -8,19 +8,25 @@ pip3 install sqlalchemy
 --install dotenv so that it can run the application
 pip3 install python-dotenv
 
+
+*Add a file .gitignore to ignore the .env file when push to Github
+*.env should never push to Github
+
+
 Github
 need to pull first if there is any changes in repository
-git pull origin main --rebase
+    git pull origin main --rebase
 
 git Add, Commit, and Push Your Changes
 If you have untracked files, add them:
-git add .
+    git add .
 
 Commit the changes:
-git commit -m "Initial commit"
+    git commit -m "Initial commit"
 
 Push to GitHub:
-git push origin main
+    git push origin main 
+
 
 
 
