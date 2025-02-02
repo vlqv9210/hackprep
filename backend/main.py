@@ -3,8 +3,8 @@ from flask import Blueprint, current_app, request, jsonify, send_from_directory
 from config import app, db
 from models import User, UserSkill, Skill
 import requests
+import json
 import utils
-from datetime import date
 from dotenv import load_dotenv
 import os
 import csv
@@ -42,7 +42,8 @@ def home():
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get client url from frontend
-    client_url = request.json.get("linkedin_url")
+    # client_url = request.json.get("linkedin_url")
+    client_url = "https://www.linkedin.com/in/vy-vuong-b29a17287/"
 
 
     # call proxycurl api to get user data into categories
@@ -54,48 +55,81 @@ def UserData():
                         params={'url': client_url, 
                                 'skills': 'include'},
                         headers=headers)
+    if response.status_code != 200:
+        return jsonify({"error": "Failed to fetch LinkedIn data"}), 500
+    
+
     client = response.json()
 
     # calculate client years of experience
     client_experience = client["experiences"]
-
-    client_year_experience = 0
-    for company in client_experience:
-        start_day = company["starts_at"]
-        # ends_at = company["ends_at"] != None ? company["ends_at"] : date.today()
-        
-
-
-
-
+    client_year_experience = utils.calculate_total_experience(client_experience)
 
     # get client skill
-
+    client_skills = client["skills"]
 
 
 
     # mentor data that match with user skills?
     # get mentor that match at least 2 skills with client
     # mentor experiences must be larger than client
-
+    mentor = utils.find_matching_mentors(client_skills=client_skills, client_year_experience=client_year_experience)
 
 
 
     # call AI API for analysis
     # put mentor with client in to get top 10
     # generate the prompt
+    prompt = f'''
+         Evaluate the compatibility between this student and mentor based on skills, and experience.
+
+        Student:
+        {client}
+
+        Mentor list:
+        {mentor}
+
+        Provide a match score from 0 to 100 and a short explanation. And also the template to message them.
+        Give us the top ten mentor for this client in a json format look like this
+
+        'name': mentor name,
+        'job_title': mentor job title,
+        'skills': mentor skill,
+        'education': mentor education,
+        'experience': mentor experience,
+        'score' : score,
+        'explanation' : reason,
+        'cold_message' : message
+
+    '''
 
 
+    mentor_response = requests.post(
+        url="https://openrouter.ai/api/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {os.getenv('AI_API_KEY')}",
+
+        },
+        data=json.dumps({
+            "model": "deepseek/deepseek-r1:free", 
+            "messages": [
+            {
+                "role": "user",
+                "content": prompt  
+            }
+            ]
+        })
+    )
+
+    if mentor_response.status_code != 200:
+        return jsonify({"error": "Failed to fetch AI analysis"}), 500
 
 
-    # return the result to frontend as json object
+    mentor_data = mentor_response.json()  # Extract JSON response
 
-    
+    # mentor_content = mentor_data["content"]
 
-
-
-
-    return jsonify({"message": "WORK!!!"})
+    return jsonify({"message": mentor_data}), 200  # ✅ Corrected
 
 
 # @app.route('/', methods=["POST"])

@@ -2,7 +2,13 @@ import csv
 from flask import Flask, request
 from sqlalchemy.orm import sessionmaker
 from config import db
+from datetime import date
 from models import User, UserSkill, Skill  # Import models
+from sqlalchemy import and_, func
+import json
+import requests
+
+
 
 app = Flask(__name__)
 
@@ -52,4 +58,44 @@ def load_csv_to_db(csv_file_path):
                 session.add(user_skill)
 
         session.commit()
+
+
+def calculate_total_experience(client_experiences):
+    total_days = 0
+    today = date.today()
+
+    for company in client_experiences:
+        start_date = company["starts_at"]
+        start = date(start_date["year"], start_date["month"], start_date["day"])
+
+        # Use today's date if `ends_at` is None (ongoing job)
+        if company["ends_at"]:
+            end_date = company["ends_at"]
+            end = date(end_date["year"], end_date["month"], end_date["day"])
+        else:
+            end = today
+
+        total_days += (end - start).days
+
+    # Convert total days to years
+    total_years = total_days / 365 
+    return int(total_years)  # Rounded to 2 decimal places
+
+
+
+def find_matching_mentors(client_skills, client_year_experience):
+    matching_mentors = (
+        User.query
+        .join(UserSkill)
+        .filter(
+            UserSkill.skill_name.in_(client_skills),
+            User.years_of_experience > client_year_experience
+        )
+        .group_by(User.id)
+        .having(func.count(UserSkill.skill_name) >= 2)
+        .all()
+    )
+
+    # Convert User objects to JSON-serializable dicts
+    return [mentor.to_json() for mentor in matching_mentors]
 
