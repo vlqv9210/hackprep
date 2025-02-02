@@ -9,7 +9,6 @@ import json
 import requests
 
 
-
 app = Flask(__name__)
 
 # Function to load CSV data and insert into the database
@@ -79,7 +78,7 @@ def calculate_total_experience(client_experiences):
 
     # Convert total days to years
     total_years = total_days / 365 
-    return int(total_years)  # Rounded to 2 decimal places
+    return int(total_years) 
 
 
 
