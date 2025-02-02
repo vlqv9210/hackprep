@@ -1,10 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { FaBriefcase, FaGraduationCap, FaStar, FaCommentAlt } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
-// MentorCard Component - Display individual mentor details
 const MentorCard = ({ mentor }) => (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{mentor.name}</h2>
+<<<<<<< HEAD
         <p className="text-lg font-semibold text-indigo-600">
             {mentor.job_title}
         </p>
@@ -20,15 +23,29 @@ const MentorCard = ({ mentor }) => (
         </p>
         <p className="text-gray-700 mt-2">
             <strong>Message:</strong> {mentor.cold_message}
+=======
+        <p className="text-lg font-semibold text-indigo-600 flex items-center mb-2">
+            <FaBriefcase className="mr-2" />
+            {mentor.job_title}
+        </p>
+        <p className="text-gray-700 mt-2 mb-2 flex items-center">
+            <FaGraduationCap className="mr-2" />
+            {mentor.education}
+        </p>
+        <p className="text-gray-700 mt-2 mb-2 flex items-center">
+            <FaStar className="mr-2" />
+            {mentor.score}
+        </p>
+        <p className="text-gray-700 mt-2 mb-2 flex items-center">
+            <FaCommentAlt className="mr-2" />
+            {mentor.cold_message}
+>>>>>>> 378e210 (fix the display of cards)
         </p>
     </div>
 );
 
-// Loader Component - Display loading message
 const Loader = () => (
-    <div className="text-xl font-semibold text-gray-700">
-        Loading mentors...
-    </div>
+    <div className="text-xl font-semibold text-gray-700">Loading mentors...</div>
 );
 
 const api = axios.create({
@@ -38,7 +55,7 @@ const api = axios.create({
 function App() {
     const [url, setUrl] = useState("");
     const [mentors, setMentors] = useState([]);
-    const [loading, setLoading] = useState(false); // Default false since mentors shouldn't load initially
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
     const handleSubmit = async () => {
@@ -56,7 +73,6 @@ function App() {
                 setMessage({
                     type: "success",
                     text: "URL submitted successfully!",
-                    message: response,
                 });
 
                 // Now fetch mentors after URL submission
@@ -67,7 +83,7 @@ function App() {
                 type: "error",
                 text: "Failed to submit URL. Try again." + e,
             });
-            setLoading(false); // Stop loading if error occurs
+            setLoading(false);
         }
     };
 
@@ -81,20 +97,22 @@ function App() {
                     type: "success",
                     text: "Mentors fetched successfully!",
                 });
+
+                // Delay message timeout
+                setTimeout(() => {
+                    setMessage(null);
+                }, 3000);
             }
 
-            // add this to the handle submit
             const mentorData = response["data"]["message"];
-
             setMentors(mentorData);
             setLoading(false);
-            //
         } catch (e) {
             setMessage({
                 type: "error",
                 text: "Failed to fetch mentors. Try again." + e,
             });
-            setLoading(false); // Stop loading if error occurs
+            setLoading(false);
         }
     };
 
@@ -128,9 +146,7 @@ function App() {
                 {message && (
                     <div
                         className={`mt-2 p-2 rounded-md text-white ${
-                            message.type === "success"
-                                ? "bg-green-500"
-                                : "bg-red-500"
+                            message.type === "success" ? "bg-green-500" : "bg-red-500"
                         }`}
                     >
                         {message.text}
@@ -142,11 +158,37 @@ function App() {
                     <Loader />
                 ) : (
                     mentors.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 w-full max-w-6xl mx-auto">
+                        <Swiper
+                            slidesPerView={4} // 4 cards per slide
+                            spaceBetween={20}
+                            loop={true}
+                            autoplay={{
+                                delay: 3000,
+                                disableOnInteraction: false,
+                            }}
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 2, // 2 cards per slide on small screens
+                                },
+                                768: {
+                                    slidesPerView: 3, // 3 cards per slide on medium screens
+                                },
+                                1024: {
+                                    slidesPerView: 4, // 4 cards per slide on larger screens
+                                },
+                            }}
+                        >
+                            {/* Generate 10 mentor cards */}
                             {mentors.map((mentor, index) => (
+<<<<<<< HEAD
                                 <MentorCard key={index} mentor={mentor} />
+=======
+                                <SwiperSlide key={index}>
+                                    <MentorCard mentor={mentor} />
+                                </SwiperSlide>
+>>>>>>> 378e210 (fix the display of cards)
                             ))}
-                        </div>
+                        </Swiper>
                     )
                 )}
             </div>
