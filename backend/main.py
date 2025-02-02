@@ -30,7 +30,7 @@ def testGetData():
 
 
 # I comment this out to prevent 
-# @app.route('/linkedinProfile', methods=["POST"])
+@app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get client url from frontend
     client_url = request.json.get("linkedin_url")
@@ -76,6 +76,7 @@ def UserData():
 
         Provide a match score from 0 to 100 and a short explanation. And also the template to message the mentor.
         Give us the top ten mentor for this client in a json format look like this
+
         'name': mentor name,
         'job_title': mentor job title,
         'skills': mentor skill,
