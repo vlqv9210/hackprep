@@ -35,26 +35,25 @@ def home():
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get user url from frontend
-    
-
+    linkedin_profile_url = request.json.get("linkedin_profile_url")
 
 
     # call proxycurl api to get user data into categories
-    
-    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
-    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+    api_key = os.getenv('API_KEY')
+    headers = {'Authorization': 'Bearer ' + api_key}
+    api_endpoint = os.getenv('API_ENDPOINT')
+    params = {
+        'url': linkedin_profile_url
+    }
 
-    response = requests.get(api_endpoint,
-                        params={'url': linkedin_profile_url, 
-                                },
-                        headers=headers)
+    response = requests.get(api_endpoint, params=params, headers=headers)
+    
     result = response.json()
 
 
 
     # mentor data that match with user skills?
-
+    
 
 
 
