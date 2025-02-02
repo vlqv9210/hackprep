@@ -166,7 +166,9 @@ function App() {
             <div className="min-h-screen bg-gray-50 flex flex-col">
                 <nav className="bg-indigo-600 text-white py-4 px-6 flex justify-between items-center shadow-md">
                     <div className="flex items-center">
-                        <div className="text-lg font-bold">LinkUp</div>
+                        <Link to="/" className="text-lg font-bold">
+                            LinkUp
+                        </Link>
                     </div>
                     <div>
                         <Link to="/about" className="text-white mx-4">
@@ -187,7 +189,7 @@ function App() {
                                     About Us
                                 </h1>
                                 <p className="text-lg text-gray-700">
-                                    This is the About page content.
+                                    We are SU <h4></h4>ackathon team
                                 </p>
                             </div>
                         }
@@ -201,7 +203,8 @@ function App() {
                                     Our Mission
                                 </h1>
                                 <p className="text-lg text-gray-700">
-                                    This is the Mission page content.
+                                    We want to help young generation to find
+                                    their mentor for their brighter future
                                 </p>
                             </div>
                         }
