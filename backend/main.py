@@ -12,12 +12,13 @@ import csv
 # Load environment variables from the .env file
 load_dotenv()
 
+from flask import jsonify
+
 @app.route('/', methods=["GET"])
 def home():
     users = User.query.all()  # Get all users from the database
-    users_json = [user.to_json() for user in users]  # Convert each user to JSON
+    return jsonify([user.to_json() for user in users])  # ✅ Convert to JSON
 
-    return jsonify(users_json)  # Return as JSON
 
 
 # @app.route('/', methods=["POST"])

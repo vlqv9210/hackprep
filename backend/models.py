@@ -29,12 +29,12 @@ class User(db.Model):
             "education": self.education,
             "years_of_experience": self.years_of_experience,
             "linkedin_profile": self.linkedin_profile,
+            "skills": [skill.to_json() for skill in self.skills]
         }
 
 class Skill(db.Model):
     __tablename__ = 'skill'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False, unique=True)
+    name = db.Column(db.String(80), primary_key=True, unique=True)
 
     def __init__(self, name):
         self.name = name
@@ -48,8 +48,14 @@ class UserSkill(db.Model):
     __tablename__ = 'user_skill'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
+    skill_name = db.Column(db.String(80), db.ForeignKey('skill.name'), nullable=False)
 
-    def __init__(self, user_id, skill_id):
+    def __init__(self, user_id, skill_name):
         self.user_id = user_id
-        self.skill_id = skill_id
+        self.skill_name = skill_name
+
+    def to_json(self):
+        return {
+            "skill": self.skill_name
+        }
+

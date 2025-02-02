@@ -48,7 +48,7 @@ def load_csv_to_db(csv_file_path):
                     session.commit()
                 
                 # Add user-skill relation
-                user_skill = UserSkill(user_id=user.id, skill_id=skill.id)
+                user_skill = UserSkill(user_id=user.id, skill_name=skill.name)
                 session.add(user_skill)
 
         session.commit()
