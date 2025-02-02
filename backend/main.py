@@ -3,8 +3,13 @@ from flask import Blueprint, current_app, request, jsonify, send_from_directory
 from config import app, db
 # from models import User
 import requests
+
+from dotenv import load_dotenv
 import os
 
+
+# Load environment variables from the .env file
+load_dotenv()
 
 @app.route('/', methods=["GET"])
 def home():
@@ -29,8 +34,38 @@ def home():
 
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
-
+    # get user url from frontend
     
+
+
+
+    # call proxycurl api to get user data into categories
+    
+    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
+    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
+    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+
+    response = requests.get(api_endpoint,
+                        params={'url': linkedin_profile_url, 
+                                },
+                        headers=headers)
+    result = response.json()
+
+
+
+    # mentor data that match with user skills?
+
+
+
+
+
+
+
+    # call AI API for analysis
+
+
+
+
 
 
     return jsonify({"message": "WORK!!!"})
