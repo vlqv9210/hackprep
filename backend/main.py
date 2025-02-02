@@ -1,9 +1,9 @@
 # Create, Read, Update, Delete (CRUD) operations for the API
 from flask import Blueprint, current_app, request, jsonify, send_from_directory
 from config import app, db
-# from models import User
+from models import User, UserSkill, Skill
 import requests
-
+import utils
 from dotenv import load_dotenv
 import os
 import csv
@@ -14,7 +14,8 @@ load_dotenv()
 
 @app.route('/', methods=["GET"])
 def home():
-    return jsonify({"message": "WORK!!!"}),200
+    result = User.query.all()
+    return result
 
 # @app.route('/', methods=["POST"])
 # def UserData():
@@ -33,57 +34,45 @@ def home():
 
 
 
-@app.route('/linkedinProfile', methods=["POST"])
-def UserData():
-    # get user url from frontend
+# @app.route('/linkedinProfile', methods=["POST"])
+# def UserData():
+#     # get user url from frontend
     
 
 
 
-    # call proxycurl api to get user data into categories
+#     # call proxycurl api to get user data into categories
     
-    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
-    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+#     headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
+#     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
+#     linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
 
-    response = requests.get(api_endpoint,
-                        params={'url': linkedin_profile_url, 
-                                },
-                        headers=headers)
-    result = response.json()
+#     response = requests.get(api_endpoint,
+#                         params={'url': linkedin_profile_url, 
+#                                 },
+#                         headers=headers)
+#     student = response.json()
 
 
 
-    # mentor data that match with user skills?
-def csv_to_json(csv):
-    json_data = []
-    
-    with open(csv_file, mode='r', newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            json_item = {
-                "Name": row["Name"],
-                "Job Title": row["Job Title"],
-                "Location": row["Location"],
-                "Education": row["Education"],
-                "Years of Experience": int(row["Years of Experience"]),
-                "Skills": row["Skills"].split(", "),
-                "LinkedIn Profile": row["LinkedIn Profile"]
-            }
-            json_data.append(json_item)
-    
-    return json_data
+#     # mentor data that match with user skills?
 
-    # call AI API for analysis
-    csv_file = 'mock_profiles.csv'
-    json_data = csv_to_json(csv_file)
+
+#     # call AI API for analysis
 
     
 
 
 
 
-    return jsonify({"message": "WORK!!!"})
+#     return jsonify({"message": "WORK!!!"})
+
+
+@app.route('/', methods=["POST"])
+def loaddb():
+    utils.load_csv_to_db("mock_profiles.csv")
+
+    return jsonify({"message": "OKEU"}),200
 
 
 

@@ -13,8 +13,7 @@ class User(db.Model):
     linkedin_profile = db.Column(db.String(200), nullable=True)
     skills = db.relationship('UserSkill', backref='user', lazy=True)
 
-    def __init__(self, id, name, jobTitle, city, education, years_of_experience, linkedin_profile):
-        self.id = id
+    def __init__(self, name, jobTitle, city, education, years_of_experience, linkedin_profile):
         self.name = name
         self.jobTitle = jobTitle
         self.city = city
@@ -24,7 +23,6 @@ class User(db.Model):
 
     def to_json(self):
         return {
-            "id": self.id,
             "name": self.name,
             "jobTitle": self.jobTitle,
             "city": self.city,
@@ -43,14 +41,13 @@ class Skill(db.Model):
 
     def to_json(self):
         return {
-            "id": self.id,
             "name": self.name,
         }
 
 class UserSkill(db.Model):
     __tablename__ = 'user_skill'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.username'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
 
     def __init__(self, user_id, skill_id):
