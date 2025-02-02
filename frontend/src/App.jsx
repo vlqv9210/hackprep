@@ -3,7 +3,6 @@ import axios from "axios";
 import { FaBriefcase, FaGraduationCap, FaStar, FaCommentAlt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 const MentorCard = ({ mentor }) => (
     <div className="bg-white p-6 rounded-lg shadow-xl max-w-xl w-full mx-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -78,117 +77,94 @@ function App() {
     };
 
     return (
-        <Router>
-            <div className="min-h-screen bg-gray-50 flex flex-col">
-                <nav className="bg-indigo-600 text-white py-4 px-6 flex justify-between items-center shadow-md">
-                    {/* Navigation Links */}
-                    <div className="flex items-center">
-                        <div className="text-lg font-bold">LinkUp</div>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+            <nav className="bg-indigo-600 text-white py-4 px-6 flex justify-between items-center shadow-md">
+                {/* Logo and Team Name */}
+                <div className="flex items-center">
+                    <img src="/linkup.png" alt="Logo" className="h-8 mr-3" />
+                    <div className="text-lg font-bold">LinkUp</div>
+                </div>
+            </nav>
+
+            <div className="flex-1 p-6 md:p-12 text-center">
+                <h1 className="text-3xl font-bold mb-6 text-indigo-600">Find Your Mentor</h1>
+                {/* URL Input */}
+                <div className="mb-4 flex flex-col items-center">
+                    <input
+                        type="url"
+                        placeholder="Enter URL"
+                        className="w-full sm:w-96 md:w-1/2 lg:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                    />
+                    <button
+                        onClick={handleSubmit}
+                        className="mt-3 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition"
+                    >
+                        Submit
+                    </button>
+                </div>
+
+                {/* Message Feedback */}
+                {message && (
+                    <div
+                        className={`mt-2 p-2 rounded-md text-white ${
+                            message.type === "success" ? "bg-green-500" : "bg-red-500"
+                        }`}
+                    >
+                        {message.text}
                     </div>
-                    <div>
-                        <Link to="/about" className="text-white mx-4">About</Link>
-                        <Link to="/mission" className="text-white">Mission</Link>
-                    </div>
-                </nav>
+                )}
 
-                <Switch>
-                    <Route path="/about">
-                        <div className="p-6 md:p-12 text-center">
-                            <h1 className="text-3xl font-bold mb-6 text-indigo-600">About Us</h1>
-                            <p className="text-lg text-gray-700">This is the About page content.</p>
-                        </div>
-                    </Route>
+                {/* Loading or Mentor Cards */}
+                {loading ? (
+                    <Loader />
+                ) : (
+                    mentors.length > 0 && (
+                        <Swiper
+                            ref={swiperRef}
+                            slidesPerView={4}
+                            spaceBetween={20}
+                            loop={true}
+                            autoplay={{
+                                delay: 3000,
+                                disableOnInteraction: false,
+                            }}
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 2,
+                                },
+                                768: {
+                                    slidesPerView: 3,
+                                },
+                                1024: {
+                                    slidesPerView: 4,
+                                },
+                            }}
+                        >
+                            {mentors.map((mentor, index) => (
+                                <SwiperSlide key={index}>
+                                    <MentorCard mentor={mentor} />
+                                </SwiperSlide>
+                            ))}
 
-                    <Route path="/mission">
-                        <div className="p-6 md:p-12 text-center">
-                            <h1 className="text-3xl font-bold mb-6 text-indigo-600">Our Mission</h1>
-                            <p className="text-lg text-gray-700">This is the Mission page content.</p>
-                        </div>
-                    </Route>
-
-                    <Route path="/">
-                        <div className="flex-1 p-6 md:p-12 text-center">
-                            <h1 className="text-3xl font-bold mb-6 text-indigo-600">Find Your Mentor</h1>
-                            {/* URL Input */}
-                            <div className="mb-4 flex flex-col items-center">
-                                <input
-                                    type="url"
-                                    placeholder="Enter URL"
-                                    className="w-full sm:w-96 md:w-1/2 lg:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    value={url}
-                                    onChange={(e) => setUrl(e.target.value)}
-                                />
-                                <button
-                                    onClick={handleSubmit}
-                                    className="mt-3 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition"
-                                >
-                                    Submit
-                                </button>
+                            <div
+                                className="swiper-button-prev text-white absolute top-1/2 left-4 transform -translate-y-1/2 z-10 cursor-pointer"
+                                onClick={() => swiperRef.current.swiper.slidePrev()}
+                            >
+                                &lt;
                             </div>
-
-                            {/* Message Feedback */}
-                            {message && (
-                                <div
-                                    className={`mt-2 p-2 rounded-md text-white ${
-                                        message.type === "success" ? "bg-green-500" : "bg-red-500"
-                                    }`}
-                                >
-                                    {message.text}
-                                </div>
-                            )}
-
-                            {/* Loading or Mentor Cards */}
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                mentors.length > 0 && (
-                                    <Swiper
-                                        ref={swiperRef}
-                                        slidesPerView={4}
-                                        spaceBetween={20}
-                                        loop={true}
-                                        autoplay={{
-                                            delay: 3000,
-                                            disableOnInteraction: false,
-                                        }}
-                                        breakpoints={{
-                                            640: {
-                                                slidesPerView: 2,
-                                            },
-                                            768: {
-                                                slidesPerView: 3,
-                                            },
-                                            1024: {
-                                                slidesPerView: 4,
-                                            },
-                                        }}
-                                    >
-                                        {mentors.map((mentor, index) => (
-                                            <SwiperSlide key={index}>
-                                                <MentorCard mentor={mentor} />
-                                            </SwiperSlide>
-                                        ))}
-
-                                        <div
-                                            className="swiper-button-prev text-white absolute top-1/2 left-4 transform -translate-y-1/2 z-10 cursor-pointer"
-                                            onClick={() => swiperRef.current.swiper.slidePrev()}
-                                        >
-                                            &lt;
-                                        </div>
-                                        <div
-                                            className="swiper-button-next text-white absolute top-1/2 right-4 transform -translate-y-1/2 z-10 cursor-pointer"
-                                            onClick={() => swiperRef.current.swiper.slideNext()}
-                                        >
-                                            &gt;
-                                        </div>
-                                    </Swiper>
-                                )
-                            )}
-                        </div>
-                    </Route>
-                </Switch>
+                            <div
+                                className="swiper-button-next text-white absolute top-1/2 right-4 transform -translate-y-1/2 z-10 cursor-pointer"
+                                onClick={() => swiperRef.current.swiper.slideNext()}
+                            >
+                                &gt;
+                            </div>
+                        </Swiper>
+                    )
+                )}
             </div>
-        </Router>
+        </div>
     );
 }
 
