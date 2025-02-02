@@ -20,4 +20,4 @@ Commit the changes:
 git commit -m "Initial commit"
 
 Push to GitHub:
-git push -u origin main
+git push origin main

@@ -7,8 +7,7 @@ import json
 import utils
 from dotenv import load_dotenv
 import os
-import csv
-
+from groq import Groq
 
 
 # Load environment variables from the .env file
@@ -19,7 +18,7 @@ from flask import jsonify
 @app.route('/', methods=["GET"])
 def home():
     users = User.query.all()  # Get all users from the database
-    return jsonify([user.to_json() for user in users])  # ✅ Convert to JSON
+    return jsonify([user.to_json() for user in users])  
 
 
 @app.route('/linkedinProfile', methods=["POST"])
@@ -41,7 +40,6 @@ def UserData():
     if response.status_code != 200:
         return jsonify({"error": "Failed to fetch LinkedIn data"}), 500
     
-
     client = response.json()
 
     # calculate client years of experience
@@ -51,13 +49,10 @@ def UserData():
     # get client skill
     client_skills = client["skills"]
 
-
-
     # mentor data that match with user skills?
     # get mentor that match at least 2 skills with client
     # mentor experiences must be larger than client
     mentor = utils.find_matching_mentors(client_skills=client_skills, client_year_experience=client_year_experience)
-
 
 
     # call AI API for analysis
@@ -65,16 +60,13 @@ def UserData():
     # generate the prompt
     prompt = f'''
         Evaluate the compatibility between this student and mentor based on skills, and experience.
-
         Student:
         {client}
-
         Mentor list:
         {mentor}
 
         Provide a match score from 0 to 100 and a short explanation. And also the template to message the mentor.
         Give us the top ten mentor for this client in a json format look like this
-
         'name': mentor name,
         'job_title': mentor job title,
         'skills': mentor skill,
@@ -83,7 +75,6 @@ def UserData():
         'score' : score,
         'explanation' : reason,
         'cold_message' : message
-
     '''
 
     mentor_response = requests.post(
@@ -101,15 +92,25 @@ def UserData():
             ]
         })
     )
-
+    
     if mentor_response.status_code != 200:
         return jsonify({"error": "Failed to fetch AI analysis"}), 500
-    
+
     # Use .json() method to extract response as a dictionary
     mentor_data = mentor_response.json()
 
+    # Check if 'choices' exists and contains at least one item
+    if 'choices' not in mentor_data or len(mentor_data['choices']) == 0:
+        return jsonify({"error": "'choices' key is missing or empty in the response"}), 500
+
+    # Extract the 'content' key from the first choice in the response
+    content = mentor_data['choices'][0]['message']['content']
+
+    # Print the content for debugging
+    print("Content:", content)
+
     # Step 1: Isolate the JSON string from the content
-    json_part = mentor_data["content"].split('`json\n')[1].split('`')[0]
+    json_part = content.split('```json\n')[1].split('```')[0]
 
     # Step 2: Parse the JSON string into a Python list of dictionaries
     mentors = json.loads(json_part)
@@ -130,7 +131,7 @@ def UserData():
         }
         formatted_mentor_list.append(formatted_mentor)
 
-    return jsonify({"message": formatted_mentor_list}), 200  
+    return jsonify({"message": formatted_mentor_list}), 200
 
 
 
@@ -171,10 +172,8 @@ def testAPI():
         Lisa Walker,Software Engineer,"Seoul, South Korea",M.S. in Data Science,21,"Deep Learning, User Interface DesignSoftware Development, Python, Software Design, AWS",http://www.thompson.com/
         George Booker,UX Designer,"New York, NY",B.A. in Information Technology,33,"TensorFlow, C++, User Interface DesignSoftware Development, Machine Learning, PyTorch",http://www.villa.com/
         
-
         Provide a match score from 0 to 100 and a short explanation. And also the template to message them.
         Give us the top ten mentor for each client in a json format look like this
-
         'name': mentor name,
         'job_title': mentor job title,
         'skills': mentor skill,
@@ -183,7 +182,6 @@ def testAPI():
         'score' : score,
         'explanation' : reason,
         'cold_message' : message
-
     '''
 
     mentor_response = requests.post(
@@ -199,7 +197,6 @@ def testAPI():
                 "content": prompt
             }
             ]
-            
         })
     )
 
