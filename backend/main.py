@@ -4,9 +4,11 @@ from config import app, db
 from models import User, UserSkill, Skill
 import requests
 import utils
+from datetime import date
 from dotenv import load_dotenv
 import os
 import csv
+
 
 
 # Load environment variables from the .env file
@@ -23,14 +25,13 @@ def home():
 
 # @app.route('/', methods=["POST"])
 # def UserData():
-
-#     api_key = ''
+#     api_key = '5OowENhf0gUjDqxmLGf9YA'
 #     headers = {'Authorization': 'Bearer ' + api_key}
 #     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-#     linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+#     linkedin_profile_url = 'https://www.linkedin.com/in/beatrizda/'
 
 #     response = requests.get(api_endpoint,
-#                         params={'url': linkedin_profile_url, 
+#                         params={'url': linkedin_profile_url, 'skills': 'include'
 #                                 },
 #                         headers=headers)
 #     result = response.json()
@@ -40,24 +41,31 @@ def home():
 
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
-    # get user url from frontend
-    
-
+    # get client url from frontend
+    client_url = request.json.get("linkedin_url")
 
 
     # call proxycurl api to get user data into categories
-    
-    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
-    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+    api_key = os.getenv("API_KEY")
+    headers = {'Authorization': 'Bearer ' + api_key}
+    api_endpoint = os.getenv("API_ENDPOINT")
 
     response = requests.get(api_endpoint,
-                        params={'url': linkedin_profile_url, 
-                                },
+                        params={'url': client_url, 
+                                'skills': 'include'},
                         headers=headers)
     client = response.json()
 
     # calculate client years of experience
+    client_experience = client["experiences"]
+
+    client_year_experience = 0
+    for company in client_experience:
+        start_day = company["starts_at"]
+        # ends_at = company["ends_at"] != None ? company["ends_at"] : date.today()
+        
+
+
 
 
 
