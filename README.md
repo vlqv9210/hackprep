@@ -4,10 +4,12 @@ Inspiration Finding the right mentor can be a game-changer, but many aspiring pr
 
 What it does LinkUp is a mentorship matching platform that helps users find and connect with experienced professionals based on their career interests and aspirations. Users input a LinkedIn profile link, and our system analyzes relevant data to generate a list of potential mentors. The platform provides details such as the mentor’s job title, education, experience, and a pre-generated cold message template to help users initiate meaningful conversations.
 
+![linkupgif](https://github.com/user-attachments/assets/5912d126-171d-4664-9612-7da5daa56cda)
+
 
 ## Tech Stack
 - **Frontend**: React, Tailwind CSS
-- **Backend**: Python, Proxycurl API, Llama API, Flask
+- **Backend**: Python, Proxycurl API, OpenRouter API, Flask
 - **Database**: SQLAlchemy, SQLite
 
 ## Contributors
