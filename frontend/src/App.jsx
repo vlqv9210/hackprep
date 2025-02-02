@@ -26,7 +26,7 @@ function App() {
   const [message, setMessage] = useState(null);
 
   const api = axios.create({
-    baseURL: 'http://127.0.0.1:5000/linkedinProfile', 
+    baseURL: 'http://127.0.0.1:5000/', 
   });
 
   const handleSubmit = async () => {
