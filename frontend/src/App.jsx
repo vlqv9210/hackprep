@@ -77,11 +77,13 @@ function App() {
                 });
             }
 
+            // add this to the handle submit
             const mentorData = response["data"]["message"];
 
             console.log(mentorData);
             setMentors(mentorData);
             setLoading(false);
+            //
         } catch (e) {
             setMessage({
                 type: "error",
