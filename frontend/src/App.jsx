@@ -1,23 +1,25 @@
 import { useState } from "react";
 import axios from "axios";
-import { FaBriefcase, FaGraduationCap, FaStar, FaCommentAlt } from "react-icons/fa";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
 
+// MentorCard Component - Display individual mentor details
 const MentorCard = ({ mentor }) => (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full mx-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">{mentor.name}</h2>
-        <p className="text-lg font-semibold text-indigo-600 flex items-center mb-2">
-            <FaBriefcase className="mr-2" />
-            {mentor.job_title}
+    <div className="bg-white p-6 border border-gray-300 rounded-lg shadow-lg flex flex-col items-center hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-indigo-50">
+        <img
+            src={mentorImage}
+            alt={mentor.name}
+            className="w-24 h-24 rounded-full mb-4 object-cover"
+        />
+        <div className="text-lg font-semibold mb-2">{mentor.name}</div>
+        <div className="text-sm text-gray-600">{mentor.job_title}</div>
+        <p className="text-gray-700 mt-2">{mentor.skills}</p>
+        <p className="text-gray-700 mt-2">
+            <strong>Education:</strong> {mentor.education}
         </p>
-        <p className="text-gray-700 mt-2 mb-2 flex items-center">
-            <FaGraduationCap className="mr-2" />
-            {mentor.education}
+        <p className="text-gray-700 mt-2">
+            <strong>Experience:</strong> {mentor.experience} years
         </p>
-        <p className="text-gray-700 mt-2 mb-2 flex items-center">
-            <FaStar className="mr-2" />
-            {mentor.score}
+        <p className="text-gray-700 mt-2">
+            <strong>Explanation:</strong> {mentor.explanation}
         </p>
         <p className="text-gray-700 mt-2 mb-2 flex items-center">
             <FaCommentAlt className="mr-2" />
@@ -27,7 +29,9 @@ const MentorCard = ({ mentor }) => (
 );
 
 const Loader = () => (
-    <div className="text-xl font-semibold text-gray-700">Loading mentors...</div>
+    <div className="text-xl font-semibold text-gray-700">
+        Loading mentors...
+    </div>
 );
 
 const api = axios.create({
@@ -128,7 +132,9 @@ function App() {
                 {message && (
                     <div
                         className={`mt-2 p-2 rounded-md text-white ${
-                            message.type === "success" ? "bg-green-500" : "bg-red-500"
+                            message.type === "success"
+                                ? "bg-green-500"
+                                : "bg-red-500"
                         }`}
                     >
                         {message.text}
@@ -140,33 +146,11 @@ function App() {
                     <Loader />
                 ) : (
                     mentors.length > 0 && (
-                        <Swiper
-                            slidesPerView={4} // 4 cards per slide
-                            spaceBetween={20}
-                            loop={true}
-                            autoplay={{
-                                delay: 3000,
-                                disableOnInteraction: false,
-                            }}
-                            breakpoints={{
-                                640: {
-                                    slidesPerView: 2, // 2 cards per slide on small screens
-                                },
-                                768: {
-                                    slidesPerView: 3, // 3 cards per slide on medium screens
-                                },
-                                1024: {
-                                    slidesPerView: 4, // 4 cards per slide on larger screens
-                                },
-                            }}
-                        >
-                            {/* Generate 10 mentor cards */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 w-full max-w-6xl mx-auto">
                             {mentors.map((mentor, index) => (
-                                <SwiperSlide key={index}>
-                                    <MentorCard mentor={mentor} />
-                                </SwiperSlide>
+                                <MentorCard key={index} mentor={mentor} />
                             ))}
-                        </Swiper>
+                        </div>
                     )
                 )}
             </div>
