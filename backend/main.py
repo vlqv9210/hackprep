@@ -38,38 +38,56 @@ def home():
 
 
 
-# @app.route('/linkedinProfile', methods=["POST"])
-# def UserData():
-#     # get user url from frontend
+@app.route('/linkedinProfile', methods=["POST"])
+def UserData():
+    # get user url from frontend
     
 
 
 
-#     # call proxycurl api to get user data into categories
+    # call proxycurl api to get user data into categories
     
-#     headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
-#     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-#     linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
+    headers = {'Authorization': 'Bearer ' + os.getenv("api_key")}
+    api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
+    linkedin_profile_url = 'https://www.linkedin.com/in/williamhgates'
 
-#     response = requests.get(api_endpoint,
-#                         params={'url': linkedin_profile_url, 
-#                                 },
-#                         headers=headers)
-#     student = response.json()
+    response = requests.get(api_endpoint,
+                        params={'url': linkedin_profile_url, 
+                                },
+                        headers=headers)
+    client = response.json()
 
-
-
-#     # mentor data that match with user skills?
+    # calculate client years of experience
 
 
-#     # call AI API for analysis
+
+    # get client skill
+
+
+
+
+    # mentor data that match with user skills?
+    # get mentor that match at least 2 skills with client
+    # mentor experiences must be larger than client
+
+
+
+
+    # call AI API for analysis
+    # put mentor with client in to get top 10
+    # generate the prompt
+
+
+
+
+    # return the result to frontend as json object
 
     
 
 
 
 
-#     return jsonify({"message": "WORK!!!"})
+    return jsonify({"message": "WORK!!!"})
 
 
 # @app.route('/', methods=["POST"])
