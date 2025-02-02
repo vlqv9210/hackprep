@@ -21,7 +21,8 @@ def home():
     return jsonify([user.to_json() for user in users])  
 
 
-@app.route('/linkedinProfile', methods=["POST"])
+# I comment this out to prevent 
+# @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get client url from frontend
     # client_url = request.json.get("linkedin_url")
