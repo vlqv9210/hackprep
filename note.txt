@@ -10,7 +10,8 @@ to run
 install react router dom 
     npm i react-router-dom
 
-
+install icon for display
+    npm i react-icons
 
 npm install redux react-redux
 
