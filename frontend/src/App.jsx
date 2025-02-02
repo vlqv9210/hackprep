@@ -77,7 +77,9 @@ function App() {
                 });
             }
 
-            const mentorData = response["message"];
+            const mentorData = response["data"]["message"];
+
+            console.log(mentorData);
             setMentors(mentorData);
             setLoading(false);
         } catch (e) {
@@ -185,9 +187,9 @@ function App() {
                                 <MentorCard
                                     key={index}
                                     name={mentor.name}
-                                    expertise={mentor.expertise}
-                                    image={mentor.image}
-                                    rating={mentor.rating}
+                                    job_title={mentor.job_title}
+                                    experience={mentor.experience}
+                                    score={mentor.score}
                                 />
                             ))}
                         </div>
