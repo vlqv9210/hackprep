@@ -1,12 +1,12 @@
 backend - setup - TORUN: python3 main.py
 cd backend
 pip3 install Flask
-pip3 install Flask
+pip3 install Flask-SQLAlchemy
 pip3 install flask-cors
-pip install sqlalchemy
+pip3 install sqlalchemy
 
 --install dotenv so that it can run the application
-pip install python-dotenv
+pip3 install python-dotenv
 
 Github
 need to pull first if there is any changes in repository

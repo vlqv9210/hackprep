@@ -14,8 +14,11 @@ load_dotenv()
 
 @app.route('/', methods=["GET"])
 def home():
-    result = User.query.all()
-    return result
+    users = User.query.all()  # Get all users from the database
+    users_json = [user.to_json() for user in users]  # Convert each user to JSON
+
+    return jsonify(users_json)  # Return as JSON
+
 
 # @app.route('/', methods=["POST"])
 # def UserData():
@@ -68,11 +71,11 @@ def home():
 #     return jsonify({"message": "WORK!!!"})
 
 
-@app.route('/', methods=["POST"])
-def loaddb():
-    utils.load_csv_to_db("mock_profiles.csv")
+# @app.route('/', methods=["POST"])
+# def loaddb():
+#     utils.load_csv_to_db("mock_profiles.csv")
 
-    return jsonify({"message": "OKEU"}),200
+#     return jsonify({"message": "OKEU"}),200
 
 
 
