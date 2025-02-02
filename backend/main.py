@@ -22,28 +22,11 @@ def home():
     return jsonify([user.to_json() for user in users])  # ✅ Convert to JSON
 
 
-
-# @app.route('/', methods=["POST"])
-# def UserData():
-#     api_key = ''
-#     headers = {'Authorization': 'Bearer ' + api_key}
-#     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
-#     linkedin_profile_url = 'https://www.linkedin.com/in/beatrizda/'
-
-#     response = requests.get(api_endpoint,
-#                         params={'url': linkedin_profile_url, 'skills': 'include'
-#                                 },
-#                         headers=headers)
-#     result = response.json()
-#     return result
-
-
-
 @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get client url from frontend
     # client_url = request.json.get("linkedin_url")
-    client_url = "https://www.linkedin.com/in/vy-vuong-b29a17287/"
+    client_url = os.getenv('client_url')
 
 
     # call proxycurl api to get user data into categories
@@ -103,29 +86,8 @@ def UserData():
 
     '''
 
-
-    # mentor_response = requests.post(
-    #     url="https://openrouter.ai/api/v1/chat/completions",
-    #     headers={
-    #         "Authorization": f"Bearer {os.getenv('AI_API_KEY')}",
-
-    #     },
-    #     data=json.dumps({
-    #         "model": "deepseek/deepseek-r1:free", 
-    #         "messages": [
-    #         {
-    #             "role": "user",
-    #             "content": prompt  
-    #         }
-    #         ]
-    #     })
-    # )
-
-
-
-
     mentor_response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
+        url= os.getenv('AI_API'),
         headers={
             "Authorization": f"Bearer {os.getenv('AI_API_KEY')}",
         },
@@ -225,7 +187,7 @@ def testAPI():
     '''
 
     mentor_response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
+        url=os.getenv('AI_API'),
         headers={
             "Authorization": f"Bearer {os.getenv('AI_API_KEY')}",
         },
