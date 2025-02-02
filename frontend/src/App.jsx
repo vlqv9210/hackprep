@@ -7,23 +7,6 @@ import "swiper/swiper-bundle.css";
 const MentorCard = ({ mentor }) => (
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{mentor.name}</h2>
-<<<<<<< HEAD
-        <p className="text-lg font-semibold text-indigo-600">
-            {mentor.job_title}
-        </p>
-        <p className="text-gray-700 mt-2">{mentor.skills}</p>
-        <p className="text-gray-700 mt-2">
-            <strong>Education:</strong> {mentor.education}
-        </p>
-        <p className="text-gray-700 mt-2">
-            <strong>Experience:</strong> {mentor.experience} years
-        </p>
-        <p className="text-gray-700 mt-2">
-            <strong>Explanation:</strong> {mentor.explanation}
-        </p>
-        <p className="text-gray-700 mt-2">
-            <strong>Message:</strong> {mentor.cold_message}
-=======
         <p className="text-lg font-semibold text-indigo-600 flex items-center mb-2">
             <FaBriefcase className="mr-2" />
             {mentor.job_title}
@@ -39,7 +22,6 @@ const MentorCard = ({ mentor }) => (
         <p className="text-gray-700 mt-2 mb-2 flex items-center">
             <FaCommentAlt className="mr-2" />
             {mentor.cold_message}
->>>>>>> 378e210 (fix the display of cards)
         </p>
     </div>
 );
@@ -180,13 +162,9 @@ function App() {
                         >
                             {/* Generate 10 mentor cards */}
                             {mentors.map((mentor, index) => (
-<<<<<<< HEAD
-                                <MentorCard key={index} mentor={mentor} />
-=======
                                 <SwiperSlide key={index}>
                                     <MentorCard mentor={mentor} />
                                 </SwiperSlide>
->>>>>>> 378e210 (fix the display of cards)
                             ))}
                         </Swiper>
                     )
