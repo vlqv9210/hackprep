@@ -119,7 +119,11 @@ function App() {
         }
         try {
             setLoading(true);
-            const response = await api.post("/testGetData", {
+            // "/linkedinProfile" 2 times left
+            // after that if want to try run
+            // change to "/testAIApi"
+            // and uncomment the fetchMentors()
+            const response = await api.post("/linkedinProfile", {
                 linkedin_url: url,
             });
             if (response.status === 200) {
@@ -127,8 +131,13 @@ function App() {
                     type: "success",
                     text: "URL submitted successfully!",
                 });
-                fetchMentors();
+                setTimeout(() => setMessage(null), 500);
             }
+            const mentorData = response["data"]["message"];
+            setMentors(mentorData);
+            setLoading(false);
+
+            // fetchMentors()
         } catch (e) {
             setMessage({
                 type: "error",
@@ -138,28 +147,28 @@ function App() {
         }
     };
 
-    const fetchMentors = async () => {
-        try {
-            setLoading(true);
-            const response = await api.post("/testAIApi", {});
-            if (response.status === 200) {
-                setMessage({
-                    type: "success",
-                    text: "Mentors fetched successfully!",
-                });
-                setTimeout(() => setMessage(null), 500);
-            }
-            const mentorData = response["data"]["message"];
-            setMentors(mentorData);
-            setLoading(false);
-        } catch (e) {
-            setMessage({
-                type: "error",
-                text: "Failed to fetch mentors. Try again." + e,
-            });
-            setLoading(false);
-        }
-    };
+    // const fetchMentors = async () => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await api.post("/testAIApi", {});
+    //         if (response.status === 200) {
+    //             setMessage({
+    //                 type: "success",
+    //                 text: "Mentors fetched successfully!",
+    //             });
+    //             setTimeout(() => setMessage(null), 500);
+    //         }
+    //         const mentorData = response["data"]["message"];
+    //         setMentors(mentorData);
+    //         setLoading(false);
+    //     } catch (e) {
+    //         setMessage({
+    //             type: "error",
+    //             text: "Failed to fetch mentors. Try again." + e,
+    //         });
+    //         setLoading(false);
+    //     }
+    // };
 
     return (
         <Router>
