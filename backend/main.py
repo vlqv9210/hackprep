@@ -54,7 +54,7 @@ def UserData():
 
 
 
-    # mentor data that match with user skills?
+    # mentor data that match with user skills
 def csv_to_json(csv_file):
     json_data = []
     
