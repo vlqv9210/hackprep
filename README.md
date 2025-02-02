@@ -1,6 +1,11 @@
 # LinkUp
 
-LinkUp is a mentorship matching system designed to connect mentors and mentees efficiently. Built with React and Tailwind CSS, the platform provides an intuitive and visually appealing user experience.
+LinkUp is a mentorship matching system designed to connect mentors and mentees efficiently. Built with React and Tailwind CSS, the platform provides an intuitive and visually appealing user experience.]=
+
+## Contributors
+1. Van Phat Pham
+2. Eusang Yu
+3. Vy Vuong
 
 ## Features
 - **Seamless Matching**: Smart algorithms pair mentors and mentees based on skills, goals, and interests.
@@ -72,6 +77,8 @@ We welcome contributions! To contribute:
 2. Create a new branch (`feature/your-feature`).
 3. Commit your changes and push them to your branch.
 4. Open a pull request.
+
+   
 
 ## License
 This project is licensed under the MIT License.
