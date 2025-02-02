@@ -25,7 +25,7 @@ def home():
 
 # @app.route('/', methods=["POST"])
 # def UserData():
-#     api_key = '5OowENhf0gUjDqxmLGf9YA'
+#     api_key = ''
 #     headers = {'Authorization': 'Bearer ' + api_key}
 #     api_endpoint = 'https://nubela.co/proxycurl/api/v2/linkedin'
 #     linkedin_profile_url = 'https://www.linkedin.com/in/beatrizda/'
