@@ -66,42 +66,74 @@ function App() {
     };
 
     const fetchMentors = async () => {
-        setTimeout(() => {
-            const mentorData = [
-                {
-                    name: "Mentor 1",
-                    expertise: "Software Engineering",
-                    image: "https://randomuser.me/api/portraits/men/1.jpg",
-                    rating: 4,
-                },
-                {
-                    name: "Mentor 2",
-                    expertise: "Data Science",
-                    image: "https://randomuser.me/api/portraits/women/1.jpg",
-                    rating: 5,
-                },
-                {
-                    name: "Mentor 3",
-                    expertise: "AI/ML",
-                    image: "https://randomuser.me/api/portraits/men/2.jpg",
-                    rating: 3,
-                },
-                {
-                    name: "Mentor 4",
-                    expertise: "Web Development",
-                    image: "https://randomuser.me/api/portraits/men/3.jpg",
-                    rating: 4,
-                },
-                {
-                    name: "Mentor 5",
-                    expertise: "Cybersecurity",
-                    image: "https://randomuser.me/api/portraits/women/2.jpg",
-                    rating: 5,
-                },
-            ];
+        try {
+            setLoading(true); // Start loading
+            const response = await api.post("/testAIApi", {});
+
+            if (response.status === 200) {
+                setMessage({
+                    type: "success",
+                    text: "URL submitted successfully!",
+                });
+            }
+
+            const mentorData = response["message"];
             setMentors(mentorData);
             setLoading(false);
-        }, 2000);
+        } catch (e) {
+            setMessage({
+                type: "error",
+                text: "Failed to submit URL. Try again." + e,
+            });
+            setLoading(false); // Stop loading if error occurs
+        }
+
+        // đổi lại cho match với cái json này
+        // {
+        //   "name": "Jessica Brewer",
+        //   "job_title": "DevOps Engineer",
+        //   "skills": "Cloud Computing, C#, Software Design, C++, Docker",
+        //   "education": "B.S. in Electrical Engineering",
+        //   "experience": 34,
+        //   "score": 45,
+        //   "explanation": "Jessica's experience in DevOps and software design makes her a good match for Vy's skills, although their skill sets differ.",
+        //   "cold_message": "Hi Jessica, I'm Vy, a data analysis student looking to learn more about DevOps. Can we discuss potential projects or collaborations?"
+        // },
+
+        // const mentorData = [
+        //     {
+        //         name: "Mentor 1",
+        //         expertise: "Software Engineering",
+        //         image: "https://randomuser.me/api/portraits/men/1.jpg",
+        //         rating: 4,
+        //     },
+        //     {
+        //         name: "Mentor 2",
+        //         expertise: "Data Science",
+        //         image: "https://randomuser.me/api/portraits/women/1.jpg",
+        //         rating: 5,
+        //     },
+        //     {
+        //         name: "Mentor 3",
+        //         expertise: "AI/ML",
+        //         image: "https://randomuser.me/api/portraits/men/2.jpg",
+        //         rating: 3,
+        //     },
+        //     {
+        //         name: "Mentor 4",
+        //         expertise: "Web Development",
+        //         image: "https://randomuser.me/api/portraits/men/3.jpg",
+        //         rating: 4,
+        //     },
+        //     {
+        //         name: "Mentor 5",
+        //         expertise: "Cybersecurity",
+        //         image: "https://randomuser.me/api/portraits/women/2.jpg",
+        //         rating: 5,
+        //     },
+        // ];
+        // setMentors(mentorData);
+        // setLoading(false);
     };
 
     return (
