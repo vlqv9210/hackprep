@@ -5,13 +5,22 @@ import axios from "axios";
 const MentorCard = ({ mentor }) => (
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{mentor.name}</h2>
-        <p className="text-lg font-semibold text-indigo-600">{mentor.job_title}</p>
+        <p className="text-lg font-semibold text-indigo-600">
+            {mentor.job_title}
+        </p>
         <p className="text-gray-700 mt-2">{mentor.skills}</p>
-        <p className="text-gray-700 mt-2"><strong>Education:</strong> {mentor.education}</p>
-        <p className="text-gray-700 mt-2"><strong>Experience:</strong> {mentor.experience} years</p>
-        <p className="text-gray-700 mt-2"><strong>Score:</strong> {mentor.score}</p>
-        <p className="text-gray-700 mt-2"><strong>Explanation:</strong> {mentor.explanation}</p>
-        <p className="text-gray-700 mt-2"><strong>Message:</strong> {mentor.cold_message}</p>
+        <p className="text-gray-700 mt-2">
+            <strong>Education:</strong> {mentor.education}
+        </p>
+        <p className="text-gray-700 mt-2">
+            <strong>Experience:</strong> {mentor.experience} years
+        </p>
+        <p className="text-gray-700 mt-2">
+            <strong>Explanation:</strong> {mentor.explanation}
+        </p>
+        <p className="text-gray-700 mt-2">
+            <strong>Message:</strong> {mentor.cold_message}
+        </p>
     </div>
 );
 
@@ -135,10 +144,7 @@ function App() {
                     mentors.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 w-full max-w-6xl mx-auto">
                             {mentors.map((mentor, index) => (
-                                <MentorCard
-                                    key={index}
-                                    mentor={mentor}
-                                />
+                                <MentorCard key={index} mentor={mentor} />
                             ))}
                         </div>
                     )
