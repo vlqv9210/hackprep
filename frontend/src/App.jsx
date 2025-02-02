@@ -1,24 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
 
-// MentorCard Component
-const MentorCard = ({ name, expertise, image, rating }) => (
-    <div className="bg-white p-6 border border-gray-300 rounded-lg shadow-lg flex flex-col items-center hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-indigo-50">
-        <img
-            src={image}
-            alt={name}
-            className="w-24 h-24 rounded-full mb-4 object-cover"
-        />
-        <div className="text-lg font-semibold mb-2">{name}</div>
-        <div className="text-sm text-gray-600">{expertise}</div>
-        <div className="flex items-center mt-2">
-            <span className="text-yellow-400">{"★".repeat(rating)}</span>
-            <span className="text-gray-500 ml-2">{rating}/5</span>
-        </div>
+// MentorCard Component - Display individual mentor details
+const MentorCard = ({ mentor }) => (
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">{mentor.name}</h2>
+        <p className="text-lg font-semibold text-indigo-600">{mentor.job_title}</p>
+        <p className="text-gray-700 mt-2">{mentor.skills}</p>
+        <p className="text-gray-700 mt-2"><strong>Education:</strong> {mentor.education}</p>
+        <p className="text-gray-700 mt-2"><strong>Experience:</strong> {mentor.experience} years</p>
+        <p className="text-gray-700 mt-2"><strong>Score:</strong> {mentor.score}</p>
+        <p className="text-gray-700 mt-2"><strong>Explanation:</strong> {mentor.explanation}</p>
+        <p className="text-gray-700 mt-2"><strong>Message:</strong> {mentor.cold_message}</p>
     </div>
 );
 
-// Loader Component
+// Loader Component - Display loading message
 const Loader = () => (
     <div className="text-xl font-semibold text-gray-700">
         Loading mentors...
@@ -73,71 +70,23 @@ function App() {
             if (response.status === 200) {
                 setMessage({
                     type: "success",
-                    text: "URL submitted successfully!",
+                    text: "Mentors fetched successfully!",
                 });
             }
 
             // add this to the handle submit
             const mentorData = response["data"]["message"];
 
-            console.log(mentorData);
             setMentors(mentorData);
             setLoading(false);
             //
         } catch (e) {
             setMessage({
                 type: "error",
-                text: "Failed to submit URL. Try again." + e,
+                text: "Failed to fetch mentors. Try again." + e,
             });
             setLoading(false); // Stop loading if error occurs
         }
-
-        // đổi lại cho match với cái json này
-        // {
-        //   "name": "Jessica Brewer",
-        //   "job_title": "DevOps Engineer",
-        //   "skills": "Cloud Computing, C#, Software Design, C++, Docker",
-        //   "education": "B.S. in Electrical Engineering",
-        //   "experience": 34,
-        //   "score": 45,
-        //   "explanation": "Jessica's experience in DevOps and software design makes her a good match for Vy's skills, although their skill sets differ.",
-        //   "cold_message": "Hi Jessica, I'm Vy, a data analysis student looking to learn more about DevOps. Can we discuss potential projects or collaborations?"
-        // },
-
-        // const mentorData = [
-        //     {
-        //         name: "Mentor 1",
-        //         expertise: "Software Engineering",
-        //         image: "https://randomuser.me/api/portraits/men/1.jpg",
-        //         rating: 4,
-        //     },
-        //     {
-        //         name: "Mentor 2",
-        //         expertise: "Data Science",
-        //         image: "https://randomuser.me/api/portraits/women/1.jpg",
-        //         rating: 5,
-        //     },
-        //     {
-        //         name: "Mentor 3",
-        //         expertise: "AI/ML",
-        //         image: "https://randomuser.me/api/portraits/men/2.jpg",
-        //         rating: 3,
-        //     },
-        //     {
-        //         name: "Mentor 4",
-        //         expertise: "Web Development",
-        //         image: "https://randomuser.me/api/portraits/men/3.jpg",
-        //         rating: 4,
-        //     },
-        //     {
-        //         name: "Mentor 5",
-        //         expertise: "Cybersecurity",
-        //         image: "https://randomuser.me/api/portraits/women/2.jpg",
-        //         rating: 5,
-        //     },
-        // ];
-        // setMentors(mentorData);
-        // setLoading(false);
     };
 
     return (
@@ -179,19 +128,16 @@ function App() {
                     </div>
                 )}
 
-                {/* Loading or Cards */}
+                {/* Loading or Mentor Cards */}
                 {loading ? (
                     <Loader />
                 ) : (
                     mentors.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md-grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 w-full max-w-6xl mx-auto">
                             {mentors.map((mentor, index) => (
                                 <MentorCard
                                     key={index}
-                                    name={mentor.name}
-                                    job_title={mentor.job_title}
-                                    experience={mentor.experience}
-                                    score={mentor.score}
+                                    mentor={mentor}
                                 />
                             ))}
                         </div>
