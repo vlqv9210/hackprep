@@ -21,12 +21,20 @@ def home():
     return jsonify([user.to_json() for user in users])  
 
 
+@app.route('/testGetData', methods=["POST"])
+def testGetData():
+    client_url = request.json.get("linkedin_url")
+
+    return jsonify({"message" : client_url}), 200
+
+
+
 # I comment this out to prevent 
 # @app.route('/linkedinProfile', methods=["POST"])
 def UserData():
     # get client url from frontend
-    # client_url = request.json.get("linkedin_url")
-    client_url = os.getenv('client_url')
+    client_url = request.json.get("linkedin_url")
+    # client_url = os.getenv('client_url')
 
 
     # call proxycurl api to get user data into categories
