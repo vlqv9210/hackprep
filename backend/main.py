@@ -6,6 +6,7 @@ import requests
 
 from dotenv import load_dotenv
 import os
+import csv
 
 
 # Load environment variables from the .env file
@@ -53,7 +54,7 @@ def UserData():
 
 
     # mentor data that match with user skills?
-    
+
 
 
 
@@ -61,8 +62,10 @@ def UserData():
 
 
     # call AI API for analysis
+    csv_file = 'mock_profiles.csv'
+    json_data = csv_to_json(csv_file)
 
-
+    
 
 
 
