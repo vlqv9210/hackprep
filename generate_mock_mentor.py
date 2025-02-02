@@ -18,7 +18,8 @@ skills_pool = [
     "Node.js", "Docker", "Kubernetes", "Machine Learning", "Deep Learning",
     "Data Analysis", "Agile", "Team Leadership", "Communication",
     "Problem Solving", "Project Management", "Cloud Computing", "Software Architecture",
-    "C#", "C", "HTML", "CSS"
+    "C#", "C", "HTML", "CSS", "Software Design", "Srum", "Program management", "User Interface Design"
+    "Software Development"
 ]
 educations = [
     "B.S. in Computer Science", "M.S. in Data Science",
@@ -30,7 +31,7 @@ locations = [
     "New York, NY", "San Francisco, CA", "Seattle, WA", "Austin, TX",
     "London, UK", "Berlin, Germany", "Toronto, Canada", "Sydney, Australia",
     "Singapore", "Paris, France", "Los Angeles, CA", "San Diego, CA", "Seoul, South Korea",
-    "Atlanta, GA", "Chicago IL", 
+    "Atlanta, GA", "Chicago, IL", 
 ]
 
 def generate_mentor_profile():
@@ -48,7 +49,7 @@ def generate_mentor_profile():
     # Convert the Python list to a string, e.g.: "Python, AWS, React, ..."
     skills_str = ", ".join(chosen_skills)
     
-    years_of_experience = random.randint(5, 20)  # 5 to 20 years
+    years_of_experience = random.randint(5, 40)  # 5 to 20 years
     # Generate a random summary (not saved to CSV, just an example)
     summary = fake.paragraph(nb_sentences=3)
     
@@ -67,7 +68,7 @@ def main():
     """
     Generate a CSV of mock mentor profiles.
     """
-    number_of_profiles = 10  # Adjust as needed
+    number_of_profiles = 100  # Adjust as needed
 
     # Generate mock data
     profiles = [generate_mentor_profile() for _ in range(number_of_profiles)]
