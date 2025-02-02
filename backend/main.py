@@ -55,7 +55,7 @@ def UserData():
 
 
     # mentor data that match with user skills?
-def csv_to_json(csv):
+def csv_to_json(csv_file):
     json_data = []
     
     with open(csv_file, mode='r', newline='', encoding='utf-8') as file:
@@ -75,8 +75,8 @@ def csv_to_json(csv):
     return json_data
 
     # call AI API for analysis
-    csv_file = 'mock_profiles.csv'
-    json_data = csv_to_json(csv_file)
+    csv_main_file = 'mock_profiles.csv'
+    json_data = csv_to_json(csv_main_file)
 
     
 
