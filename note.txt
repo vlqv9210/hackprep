@@ -5,7 +5,7 @@ install axios to request and response
     npm i axios
 
 to run
-    nom run dev
+    npm run dev
 
 install react router dom 
     npm i react-router-dom
@@ -13,10 +13,10 @@ install react router dom
 install icon for display
     npm i react-icons
 
-npm install redux react-redux
-
-
 rfce -> create a component
+
+If want to use redux for tracking states
+    npm install redux react-redux
 
 
 npm install @reduxjs/toolkit 
