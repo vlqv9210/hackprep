@@ -5,6 +5,7 @@ pip3 install Flask-SQLAlchemy
 pip3 install flask-cors
 pip install sqlalchemy
 
+Github
 need to pull first if there is any changes in repository
 git pull origin main --rebase
 
